@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeskPilot | Service Desk Management</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        .password-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .password-input-wrapper input {
+            width: 100%;
+            padding-right: 50px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 19px;
+            color: #64748b;
+            padding: 5px;
+        }
+
+        .toggle-password:hover {
+            color: #4f46e5;
+        }
+    </style>
+</head>
+
+<body>
+
+<section id="authSection" class="auth-section">
+
+    <div class="auth-brand">
+        <div class="brand-logo">D</div>
+        <span>DeskPilot</span>
+    </div>
+
+    <div class="auth-container">
+
+        <!-- LOGIN FORM -->
+        <div id="loginForm" class="auth-card">
+
+            <div class="auth-heading">
+                <h1>Welcome back</h1>
+                <p>Sign in to manage your support tickets.</p>
+            </div>
+
+            <form id="loginFormElement">
+
+                <div class="form-group">
+                    <label for="loginEmail">Email address</label>
+                    <input type="email" id="loginEmail"
+                           placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+
+                    <div class="password-input-wrapper">
+                        <input type="password" id="loginPassword"
+                               placeholder="Enter your password"
+                               minlength="8" required>
+
+                        <button type="button" class="toggle-password"
+                                data-password-target="loginPassword"
+                                aria-label="Show password"
+                                aria-pressed="false">👁</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="primary-btn">Sign In</button>
+
+            </form>
+
+            <p class="auth-switch">
+                Don't have an account?
+                <a href="#" id="showRegister">Create account</a>
+            </p>
+
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div id="registerForm" class="auth-card hidden">
+
+            <div class="auth-heading">
+                <h1>Create account</h1>
+                <p>Join DeskPilot to manage your support requests.</p>
+            </div>
+
+            <form id="registerFormElement">
+
+                <div class="form-group">
+                    <label for="registerName">Full name</label>
+                    <input type="text" id="registerName"
+                           placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerEmail">Email address</label>
+                    <input type="email" id="registerEmail"
+                           placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+
+                    <div class="password-input-wrapper">
+                        <input type="password" id="registerPassword"
+                               placeholder="Create a password"
+                               minlength="8" required>
+
+                        <button type="button" class="toggle-password"
+                                data-password-target="registerPassword"
+                                aria-label="Show password"
+                                aria-pressed="false">👁</button>
+                    </div>
+
+                    <small>Password must contain at least 8 characters.</small>
+                </div>
+
+                <button type="submit" class="primary-btn">Create Account</button>
+
+            </form>
+
+            <p class="auth-switch">
+                Already have an account?
+                <a href="#" id="showLogin">Sign in</a>
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- MAIN APPLICATION -->
+<div id="appSection" class="app-section hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="brand-logo">D</div>
+            <span>DeskPilot</span>
+        </div>
+
+        <div class="sidebar-menu">
+
+            <p class="menu-label">WORKSPACE</p>
+
+            <a href="#" class="menu-item active" data-section="dashboardSection">
+                <span class="menu-icon">▦</span> Dashboard
+            </a>
+
+            <a href="#" class="menu-item" data-section="ticketsSection">
+                <span class="menu-icon">▤</span> All Tickets
+            </a>
+
+            <a href="#" class="menu-item" data-section="createTicketSection">
+                <span class="menu-icon">＋</span> Create Ticket
+            </a>
+
+            <a href="#" class="menu-item admin-only hidden" data-section="usersSection">
+                <span class="menu-icon">♙</span> User Management
+            </a>
+
+        </div>
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-user">
+                <div class="user-avatar" id="sidebarAvatar">U</div>
+
+                <div class="sidebar-user-info">
+                    <strong id="sidebarUserName">User Name</strong>
+                    <small id="sidebarUserRole">USER</small>
+                </div>
+            </div>
+
+            <button id="logoutBtn" class="logout-btn">⇥ Logout</button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div>
+                <h2 id="pageTitle">Dashboard</h2>
+                <p>Welcome to your service desk workspace.</p>
+            </div>
+
+            <div class="topbar-profile">
+                <div class="user-avatar" id="headerAvatar">U</div>
+            </div>
+
+        </header>
+
+
+        <!-- DASHBOARD -->
+        <section id="dashboardSection" class="content-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <h1>Dashboard Overview</h1>
+                    <p>Track and manage your support tickets.</p>
+                </div>
+
+                <button class="primary-btn small-btn" data-section="createTicketSection">
+                    + Create Ticket
+                </button>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Total Tickets</span>
+                        <span class="stat-icon blue">▤</span>
+                    </div>
+                    <h2 id="totalTickets">0</h2>
+                    <p>Tickets in your workspace</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Open Tickets</span>
+                        <span class="stat-icon orange">◷</span>
+                    </div>
+                    <h2 id="openTickets">0</h2>
+                    <p>Waiting for resolution</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>In Progress</span>
+                        <span class="stat-icon purple">↻</span>
+                    </div>
+                    <h2 id="progressTickets">0</h2>
+                    <p>Currently being handled</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Resolved</span>
+                        <span class="stat-icon green">✓</span>
+                    </div>
+                    <h2 id="resolvedTickets">0</h2>
+                    <p>Successfully completed</p>
+                </div>
+
+            </div>
+
+
+            <div class="content-card">
+
+                <div class="card-heading">
+
+                    <div>
+                        <h2>Recent Tickets</h2>
+                        <p>Latest support requests</p>
+                    </div>
+
+                    <button class="text-btn" data-section="ticketsSection">View All</button>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Title</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="recentTicketsBody">
+                            <tr>
+                                <td colspan="5" class="empty-message">
+                                    No tickets available yet.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ALL TICKETS -->
+        <section id="ticketsSection" class="content-section hidden">
+
+            <div class="section-heading">
+
+                <div>
+                    <h1>All Tickets</h1>
+                    <p>View and manage your support requests.</p>
+                </div>
+
+                <button class="primary-btn small-btn" data-section="createTicketSection">
+                    + Create Ticket
+                </button>
+
+            </div>
+
+
+            <div class="content-card">
+
+                <div class="ticket-toolbar">
+
+                    <input type="text" id="ticketSearch"
+                           placeholder="Search tickets...">
+
+                    <select id="statusFilter">
+                        <option value="">All Statuses</option>
+                        <option value="OPEN">Open</option>
+                        <option value="IN_PROGRESS">In Progress</option>
+                        <option value="RESOLVED">Resolved</option>
+                    </select>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Title</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Assigned To</th>
+                                <th>Created</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="ticketsTableBody">
+                            <tr>
+                                <td colspan="7" class="empty-message">
+                                    No tickets available.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CREATE TICKET -->
+        <section id="createTicketSection" class="content-section hidden">
+
+            <div class="section-heading">
+                <div>
+                    <h1>Create New Ticket</h1>
+                    <p>Submit a new support request.</p>
+                </div>
+            </div>
+
+
+            <div class="content-card form-card">
+
+                <form id="createTicketForm">
+
+                    <div class="form-group">
+                        <label for="ticketTitle">Ticket Title</label>
+                        <input type="text" id="ticketTitle"
+                               placeholder="Enter a short ticket title"
+                               maxlength="150" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ticketDescription">Description</label>
+                        <textarea id="ticketDescription" rows="5"
+                                  maxlength="2000"
+                                  placeholder="Describe your issue in detail..."
+                                  required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ticketPriority">Priority</label>
+
+                        <select id="ticketPriority" required>
+                            <option value="LOW">Low</option>
+                            <option value="MEDIUM" selected>Medium</option>
+                            <option value="HIGH">High</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="reset" class="secondary-btn">Clear</button>
+                        <button type="submit" class="primary-btn">Submit Ticket</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- TICKET DETAILS -->
+        <section id="ticketDetailsSection" class="content-section hidden">
+
+            <div class="section-heading">
+
+                <div>
+                    <h1>Ticket Details</h1>
+                    <p>View and update ticket information.</p>
+                </div>
+
+                <button id="backToTicketsBtn" class="secondary-btn">
+                    ← Back to Tickets
+                </button>
+
+            </div>
+
+
+            <div class="content-card">
+
+                <div class="ticket-detail-header">
+
+                    <div>
+                        <span class="detail-label">Ticket ID</span>
+                        <h2 id="detailTicketId">#0</h2>
+                    </div>
+
+                    <span id="detailStatus" class="status-badge">OPEN</span>
+
+                </div>
+
+
+                <div class="detail-grid">
+
+                    <div>
+                        <span class="detail-label">Title</span>
+                        <p id="detailTitle">Ticket title</p>
+                    </div>
+
+                    <div>
+                        <span class="detail-label">Priority</span>
+                        <p id="detailPriority">MEDIUM</p>
+                    </div>
+
+                    <div>
+                        <span class="detail-label">Created By</span>
+                        <p id="detailCreatedBy">-</p>
+                    </div>
+
+                    <div>
+                        <span class="detail-label">Assigned To</span>
+                        <p id="detailAssignedTo">Unassigned</p>
+                    </div>
+
+                    <div class="full-width">
+                        <span class="detail-label">Description</span>
+                        <p id="detailDescription">Ticket description</p>
+                    </div>
+
+                </div>
+
+
+                <!-- ADMIN AND AGENT TICKET UPDATE -->
+                <div id="ticketUpdateArea" class="ticket-update-area hidden">
+
+                    <h3>Update Ticket</h3>
+
+                    <form id="updateTicketForm">
+
+                        <div class="form-group">
+                            <label for="updateStatus">Status</label>
+
+                            <select id="updateStatus">
+                                <option value="OPEN">Open</option>
+                                <option value="IN_PROGRESS">In Progress</option>
+                                <option value="RESOLVED">Resolved</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="updatePriority">Priority</label>
+
+                            <select id="updatePriority">
+                                <option value="LOW">Low</option>
+                                <option value="MEDIUM">Medium</option>
+                                <option value="HIGH">High</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="primary-btn">Save Changes</button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- USER TICKET ACTIONS -->
+                <div id="userTicketActions" class="ticket-update-area hidden">
+
+                    <h3>Edit Your Ticket</h3>
+
+                    <form id="userEditTicketForm">
+
+                        <div class="form-group">
+                            <label for="userEditTitle">Ticket Title</label>
+                            <input type="text" id="userEditTitle"
+                                   maxlength="150" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userEditDescription">Description</label>
+                            <textarea id="userEditDescription"
+                                      rows="4" maxlength="2000"
+                                      required></textarea>
+                        </div>
+
+                        <button type="submit" class="primary-btn">
+                            Save Changes
+                        </button>
+
+                    </form>
+
+
+                    <div class="form-actions">
+                        <button type="button" id="markResolvedBtn"
+                                class="primary-btn">
+                            Mark as Resolved
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <!-- ADMIN TICKET ASSIGNMENT -->
+                <div id="ticketAssignmentArea" class="ticket-update-area hidden">
+
+                    <h3>Assign Ticket</h3>
+
+                    <form id="assignTicketForm">
+
+                        <div class="form-group">
+                            <label for="assignedAgentEmail">Agent Email</label>
+
+                            <input type="email" id="assignedAgentEmail"
+                                   placeholder="Enter agent email" required>
+                        </div>
+
+                        <button type="submit" class="primary-btn">
+                            Assign Ticket
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <button id="deleteTicketBtn" class="danger-btn hidden">
+                    Delete Ticket
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- USER MANAGEMENT -->
+        <section id="usersSection" class="content-section hidden">
+
+            <div class="section-heading">
+
+                <div>
+                    <h1>User Management</h1>
+                    <p>Create support agents and administrators.</p>
+                </div>
+
+            </div>
+
+
+            <div class="content-card form-card">
+
+                <h2>Create Team Member</h2>
+
+                <form id="createUserForm">
+
+                    <div class="form-group">
+                        <label for="newUserName">Full Name</label>
+
+                        <input type="text" id="newUserName"
+                               placeholder="Enter full name" required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="newUserEmail">Email Address</label>
+
+                        <input type="email" id="newUserEmail"
+                               placeholder="Enter email address" required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="newUserPassword">Password</label>
+
+                        <div class="password-input-wrapper">
+                            <input type="password" id="newUserPassword"
+                                   placeholder="Create password"
+                                   minlength="8" required>
+
+                            <button type="button" class="toggle-password"
+                                    data-password-target="newUserPassword"
+                                    aria-label="Show password"
+                                    aria-pressed="false">👁</button>
+                        </div>
+
+                        <small>Password must contain at least 8 characters.</small>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="newUserRole">Role</label>
+
+                        <select id="newUserRole" required>
+                            <option value="AGENT">Agent</option>
+                            <option value="ADMIN">Administrator</option>
+                        </select>
+                    </div>
+
+
+                    <button type="submit" class="primary-btn">
+                        Create Team Member
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- NOTIFICATION -->
+<div id="notification" class="notification hidden"></div>
+
+
+<!-- PASSWORD VISIBILITY -->
+<script>
+    document.querySelectorAll(".toggle-password").forEach(button => {
+        button.addEventListener("click", function () {
+
+            const passwordInput = document.getElementById(
+                this.dataset.passwordTarget
+            );
+
+            if (!passwordInput) return;
+
+            const isPasswordHidden = passwordInput.type === "password";
+
+            passwordInput.type = isPasswordHidden ? "text" : "password";
+
+            this.textContent = isPasswordHidden ? "🙈" : "👁";
+
+            this.setAttribute(
+                "aria-label",
+                isPasswordHidden ? "Hide password" : "Show password"
+            );
+
+            this.setAttribute("aria-pressed", String(isPasswordHidden));
+        });
+    });
+</script>
+
+<script src="script.js"></script>
+
+</body>
+</html>
